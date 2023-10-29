@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/category.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="formborder">
+      <%- include("../shared/layout.ejs")%>
+        <div class="page">
+          <div style="height: 50px; width: 85%">
+            <h1>category</h1>
+          </div>
+          <form id="categoryForm" method="POST" action="/me/add" enctype="multipart/form-data">
+            <div class="addctgr">
+              <input type="text" name="danhmuc" class="input" id="danhmuc" placeholder="nhập danh mục">
+              <button type="button" class="submit" onclick="saveData()" id="add">+</button>
+            </div>
+            <div class="showdanhmuc">
+              <div class="thead" style="display: flex">
+                <b>STT</b>
+                <b class="thdm">Danh mục</b>
+                <b class="Change">Change</b>
+                <b class="Delete">Delete</b>
+              </div>
+              <div class="tbody">
+                <% categories.forEach((category, index)=> { %>
+                  <div class="oneobject">
+                    <th scope="row">
+                      <%= index + 1 %>
+                    </th>
+                    <div class="td">
+                      <%= category.danhmuc %>
+                    </div>
+                    <div class="achange" onclick="getCategoryId('<%= category._id %>')"><i class="fa-solid fa-pen-to-square" style="color: #000000;"></i></div>
+                    <a class="adel" data-id="<%= category._id %>"><i class="fa-solid fa-trash"
+                        style="color: #000000;"></i></a>
+                  </div>
+
+
+
+                  <div class="formedit">
+                    <div class="borderedit">
+                      <div style="height: 100%;">
+                        <h1>Change</h1>
+                        <div class="close">
+                          <b style="color: white;">hủy</b>
+                        </div>
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                          <input type="hidden" value="<%= category._id %>" id="getID">
+                          <input type="text" placeholder="nhập danh mục..." class="inputedit" name="danhmuc"
+                            id="getdanhmuc" onfocus="this.select()">
+                          <div class="bntedit" onclick="changeData()">sửa</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }) %>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    function getCategoryId(id) {
+        document.getElementById('getID').value = id;
+    }
+  </script>
+
+
+
+
+  <script>
+    //bôi đen
+    document.getElementById("myInput").onclick = function () {
+      this.select();
+    };
+
+    function saveData() {
+      const danhmuc = document.getElementById("danhmuc").value;
+      fetch('/me/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ danhmuc: danhmuc }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          alert("thêm thành công");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+
+
+
+  <script>
+    const buttons = document.querySelectorAll('.achange');
+    const formedit = document.querySelector('.formedit');
+    const x = document.querySelectorAll('.close');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        formedit.style.display = 'flex';
+      });
+    });
+
+    x.forEach(button => {
+      button.addEventListener('click', () => {
+        formedit.style.display = 'none';
+      });
+    });
+  </script>
+
+
+
+  <script>
+    const achangeElements = document.querySelectorAll('.achange');
+    const inputEdit = document.querySelector('.inputedit');
+
+    achangeElements.forEach((achange, index) => {
+      achange.addEventListener('click', () => {
+        const tdValue = document.querySelectorAll('.td')[index].textContent;
+        inputEdit.value = tdValue;
+      });
+    });
+
+    const deleteButtons = document.querySelectorAll('.adel');
+    deleteButtons.forEach(deleteButton => {
+      deleteButton.addEventListener('click', () => {
+        const categoryId = deleteButton.getAttribute('data-id');
+        fetch(`/me/${categoryId}`, {
+          method: 'DELETE',
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Đã xóa:', data);
+            location.reload();
+          })
+          .catch(error => console.error('Lỗi:', error));
+      });
+    });
+  </script>
+
+  <script>
+    function changeData() {
+      var categoryId = document.getElementById('getID').value;
+      var danhmuc = document.getElementById('getdanhmuc').value;
+
+      fetch(`/me/${categoryId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ danhmuc: danhmuc }),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Data updated successfully:', data);
+          window.location.reload();
+
+        })
+        .catch(error => {
+          console.error('Error updating data:', error);
+          // Handle error if the update request fails
+        });
+    }
+  </script>
+
+</body>
+
+</html>

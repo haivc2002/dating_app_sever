@@ -1,0 +1,232 @@
+.formadd {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+}
+
+body {
+    margin: 0;
+    padding: 0
+}
+
+.imageright {
+    height: 100%;
+    width: 37vw;
+    background-image: url(/imge/anhben.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.itemleft {
+    width: 63vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.itemadd {
+    overflow-y: auto;
+    height: auto;
+    width: auto;
+    width: 96%;
+    height: 90%;
+    /* box-shadow: 0px 10px 10px 5px rgba(80, 80, 80, 0.2); */
+}
+
+.inputaddart,
+select {
+    background-color: #F7F4EF;
+    outline: 0;
+    border: 0;
+    height: 30px;
+    width: 100%;
+
+}
+
+.form-group {
+    flex-direction: column;
+    display: flex;
+    margin-bottom: 30px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.bntimg {
+    background-color: #F7F4EF;
+    color: gray;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.showimg {
+    height: 200px;
+    width: 133px;
+    background-color: #F6F6FF;
+    border-radius: 5px;
+    border: 3px dashed #bbbbf0;
+    background-size: cover;
+    background-position: center;
+}
+
+.tren {
+    width: 100%;
+    display: flex;
+}
+
+.trai {
+    width: 35%;
+}
+
+.phai {
+    height: 100%;
+    width: 65%;
+}
+
+
+
+.textarea {
+    border: 1px solid silver;
+    outline: 0;
+    width: 90%;
+    height: 42vh;
+    border-radius: 4px;
+    resize: none;
+    background-color: rgb(245, 245, 245);
+    overflow-x: hidden;
+    margin-left: 10px;
+}
+
+.mutiple {
+    display: flex;
+    height: 180px;
+    margin-top: 10px;
+}
+
+.bntadd {
+    background-color: #FEC74D;
+    border: 0;
+    outline: 0;
+    border-radius: 50px;
+    height: 40px;
+    width: 120px;
+    font-weight: 700;
+    color: #05273B;
+    margin-top: 30px;
+}
+
+h1 {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    cursor: pointer;
+    font-size: 40px;
+    font-weight: bold;
+    color: #bbbbf0;
+    width: 120px;
+    height: 100%;
+    background-color: #F6F6FF;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    border: 3px dashed #bbbbf0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 24px;
+    user-select: none;
+
+}
+
+
+.stackimg {
+    overflow-x: auto;
+    display: flex;
+    width: 90%;
+    white-space: nowrap;
+    border: 1px solid black;
+    margin-left: 20px;
+    background-color: #F6F6FF;
+    border-radius: 5px;
+    border: 3px dashed #bbbbf0;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    border: 0;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background: #6d6d6d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+
+.abc {
+    display: flex;
+}
+
+.formselect {
+    width: 50%;
+}
+
+.formgetimg {
+    width: 50%;
+    margin-left: 10px;
+    flex-direction: column;
+}
+.fileexplorrer {
+    font-size: 13px;
+    font-weight: 300;
+    background-color: #bbbbf0;
+    height: 30px;
+    width: 133px;
+    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+.clearimg {
+    height: 35px;
+    width: 35px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius: 50px;
+    background-color: rgb(238, 81, 81);
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    margin-left: -20px;
+    margin-top: -10px;
+    /* cursor: auto; */
+    user-select: none;
+}

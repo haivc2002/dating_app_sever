@@ -1,0 +1,173 @@
+body {
+    margin: 0;
+    padding: 0
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-image: url(/imge/tuongthanh.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: relative;
+}
+
+.formborder {
+    height: 80%;
+    width: 80%;
+    background-color: rgba(244,244,244, 0.5);
+    display: flex;
+    border-radius: 10px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(199, 199, 199, 0.7);
+    box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+    margin: 0px;
+    text-align: center;
+}
+
+.page {
+    width: 85%;
+    height: 100%;
+}
+
+.input {
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    font-size: 17px;
+}
+
+.addctgr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 310px;
+    border-radius: 8px;
+    box-shadow:  5px 5px 10px rgba(0, 0, 0, 0.5),
+    -5px -5px 10px rgba(255, 255, 255, 0.7);
+    margin-left: 100px;
+
+}
+
+.showdanhmuc {
+    margin-top: 30px;
+    margin-left: 100px;
+    width: 70%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+}
+
+.thdm {
+    padding-left:  100px;
+}
+
+td {
+    font-size: 20px;
+}
+
+.oneobject {
+    border-bottom: 1px solid black;
+    display: flex;
+    margin-top: 10px;
+
+}
+
+.tbody {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    height: 400px;
+    overflow: auto;
+
+}
+
+.td {
+    padding-left: 120px;
+    font-size: 19px;
+    width: 400px;
+}
+
+.Change {
+    margin-left: auto;
+}
+
+.Delete {
+    margin-left: 20px;
+}
+
+.achange {
+    margin-left: 100px;
+    font-size: 20px;
+    border: 0;
+    background-color: transparent;
+    outline: 0;
+}
+.adel {
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+.formedit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    box-shadow: 0 0 10px 200px rgba(0, 0, 0, 0.9);
+}
+
+.borderedit {
+    height: 40%;
+    width: 40%;
+    background-color: white;
+    border-radius: 10px;
+    position: relative;
+}
+
+.close {
+    background-color: rgb(130, 130, 130);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 70px;
+    height: 40px;
+    right: 0;
+    position: absolute;
+}
+
+.bntedit {
+    border: 0;
+    background-color: rgb(105, 105, 255);
+    color: white;
+    font-size: 17px;
+    border-radius: 4px;
+    width: 80px;
+    text-align: center;
+    cursor: auto;
+}

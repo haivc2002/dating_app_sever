@@ -1,0 +1,88 @@
+<!-- 
+<div class="mt-4">
+    <div class="row">
+        {{#each dienthoais}}
+        <div class="product1">
+        <div class="product-toyota">
+
+            <div class="product-toyotaxe">
+                <div class="product-item1 product-xe">
+
+                    <div class="productvios">
+
+
+                        <div class="product-item">
+
+                          <a href="/dienthoais/{{this.slug}}">             {{!--  sang trang chi tiết ( show.ejs )  --}}
+                                <div class="image">
+                                    <img style="width:200px;height:170px" src="/uploads/{{this.image}}" alt="">
+                                </div>
+                            </a>
+                            <div class="product-title">
+                                <h3 style="margin-top:-10px">{{this.name}}</h3>
+
+                                <del>{{this.GiaCu}}<u>đ</u></del>
+                                <span>{{this.GiaMoi}} <u>đ</u></span>
+                                <a style="margin-top:15px;margin-left:90px;" href="#" class="product_add_cart"> THÊM GIỎ HÀNG </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+        {{/each}}
+    </div>
+</div>
+
+<a href="/search">Tìm kiếm sản phẩm</a> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <div class="mt-4">
+        <div class="row">
+            <% dienthoais.forEach(function(dienthoai) { %>
+            <div class="product1">
+                <div class="product-toyota">
+                    <div class="product-toyotaxe">
+                        <div class="product-item1 product-xe">
+                            <div class="productvios">
+                                <div class="product-item">
+                                    <a href="/dienthoais/<%= dienthoai.slug %>">
+                                        <div class="image">
+                                            <img style="width:200px;height:170px" src="/uploads/<%= dienthoai.image %>" alt="">
+                                        </div>
+                                    </a>
+                                    <div class="product-title">
+                                        <h3 style="margin-top:-10px"><%= dienthoai.name %></h3>
+                                        <del><%= dienthoai.GiaCu %><u>đ</u></del>
+                                        <span><%= dienthoai.GiaMoi %> <u>đ</u></span>
+                                        <a style="margin-top:15px;margin-left:90px;" href="#" class="product_add_cart"> THÊM GIỎ HÀNG </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+    <a href="/search">Tìm kiếm sản phẩm</a>
+</body>
+</html>
+

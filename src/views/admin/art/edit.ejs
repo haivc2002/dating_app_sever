@@ -1,0 +1,82 @@
+<head>
+    <link rel="stylesheet" href="/css/artadd.css">
+</head>
+
+<body>
+    <div class="formadd">
+        <div class="itemleft">
+            <h1>artifacts/art(Edit!)</h1>
+            <div class="itemadd">
+                <form method="POST" action="/art/<%= Art._id %>?_method=PUT" enctype="multipart/form-data">
+                    <div class="bentrai">
+                        <div class="form-group">
+                            <label for="title">Title*</label>
+                            <input type="text" class="inputaddart" id="title" name="title">
+                        </div>
+                        <div class="form-group">
+                            <label>Image*</label>
+                            <input type="file" class="bntimg" id="image" name="image" accept="image/*"
+                                onchange="previewImage(event)">
+                            <div class="showimg" id="showimg">
+                                <!-- show ảnh -->
+                            </div>
+                            <!-- <input type="text" class="" id="connect" name="connect" value=""> -->
+                        </div>
+
+                        <label>Multiple image</label>
+                        <div class="mutiple">
+                            <div onclick="openFileExplorer()" class="itemmutiple">
+                                <b class="b">+</b>
+                            </div>
+                            <div onclick="openFileExplorer()" class="itemmutiple">
+                                <b class="b">+</b>
+                            </div>
+                            <div onclick="openFileExplorer()" class="itemmutiple">
+                                <b class="b">+</b>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="source">Source*</label>
+                            <select class="select" id="source" name="source">
+                                <% categories.forEach(category=> { %>
+                                    <option value="<%= category.danhmuc %>">
+                                        <%= category.danhmuc %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="benphai">
+                        <div class="form-group">
+                            <label for="info">text*</label>
+                            <textarea type="text" class="textarea" id="info" name="info"></textarea>
+                        </div>
+                        <button type="submit" class="bntadd">Thêm </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="imageright"></div>
+    </div>
+
+
+    <script>
+        function openFileExplorer() {
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.click();
+        }
+        // show ảnh
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('showimg');
+                output.style.backgroundImage = 'url(' + reader.result + ')';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+</body>

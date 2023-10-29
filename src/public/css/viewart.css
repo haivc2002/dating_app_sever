@@ -1,0 +1,118 @@
+.bntadd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5),
+        -5px -5px 10px rgba(255, 255, 255, 0.7);
+    margin-left: 100px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.list {
+    height: 76%;
+    width: 96%;
+    margin: auto;
+    overflow: auto;
+    margin-top: 20px;
+}
+
+
+.oneobject {
+    display: flex;
+    border-bottom: 1px solid black;
+    height: 180px;
+    transition: 150ms;
+}
+
+.tdtitle {
+    width: 15%;
+    text-align: center;
+    font-size: 18px;
+    border-left: 1px solid rgb(132, 132, 132);
+}
+
+.td {
+    width: 90%;
+    font-size: 18px;
+    height: 90%;
+    overflow-y: auto;
+}
+
+
+.borderinfo {
+    height: 100%;
+    width: 48%;
+    border-left: 1px solid rgb(132, 132, 132);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    border: 0;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: none;
+
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background: #6d6d6d;
+    transition: background 300ms;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+
+
+.stt {
+    width: 3%;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.thtitle {
+    width: 15%;
+    text-align: center;
+}
+
+.thinfo {
+    text-align: center;
+    width: 48%;
+}
+
+.option {
+    width: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid rgb(132, 132, 132);
+
+}
+
+.adel {
+    margin-top: 20px;
+}
+
+.tbody {
+    margin-top: 10px;
+}
+
+.styleimg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/fomatform.css">
+    <link rel="stylesheet" href="/css/viewart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="formborder">
+            <%- include("../shared/layout.ejs")%>
+                <div class="page">
+                    <div style="height: 50px; width: 85%">
+                        <h1>artifacts/art</h1>
+                    </div>
+                    <a class="bntadd" href="/art/create">+</a>
+                    <div class="list">
+                        <div class="thead" style="display: flex">
+                            <b>STT</b>
+                            <b class="thtitle">Title</b>
+                            <b class="thtitle">image</b>
+                            <b class="thtitle">source</b>
+                            <b class="thinfo">info</b>
+                            <b class="Delete">option</b>
+                        </div>
+
+
+                        <div class="tbody">
+                            <% arts.forEach((i, index)=> { %>
+                                <div class="oneobject">
+                                    <div class="stt">
+                                        <%= index + 1 %>
+                                    </div>
+                                    <div class="tdtitle">
+                                        <%= i.title %>
+                                    </div>
+                                    <div class="tdtitle styleimg">
+                                        <img src="/uploads/<%=i.image%>" alt="<%=i.name%>"
+                                            style="height: 159px; width: 106px; border-radius: 6px;">
+                                    </div>
+                                    <div class="tdtitle">
+                                        <%= i.source %>
+                                    </div>
+                                    <div class="borderinfo">
+                                        <div class="td">
+                                            <%= i.info %>
+                                        </div>
+                                    </div>
+
+                                    <div class="option">
+                                        <a class="achange" href="/art/<%= i._id %>/formedit"><i
+                                                class="fa-solid fa-pen-to-square" style="color: #000000;"></i></a>
+                                        <a class="adel" data-id="<%= i._id %>"><i class="fa-solid fa-trash"
+                                                style="color: #000000;"></i></a>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+    <script>
+        const deleteButtons = document.querySelectorAll('.adel');
+        deleteButtons.forEach(deleteButton => {
+            deleteButton.addEventListener('click', () => {
+                const artId = deleteButton.getAttribute('data-id');
+                fetch(`/art/${artId}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Đã xóa:', data);
+                        location.reload();
+                    })
+                    .catch(error => console.error('Lỗi:', error));
+            });
+        });
+    </script>
+</body>
+
+</html>
