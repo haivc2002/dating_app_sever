@@ -18,55 +18,55 @@
     <div class="container">
         <div class="formborder">
             <%- include("../shared/layout.ejs")%>
-                <div class="page">
-                    <div style="height: 50px; width: 85%">
-                        <h1>artifacts/art</h1>
+            <div class="page">
+                <div style="height: 50px; width: 85%">
+                    <h1>artifacts/art</h1>
+                </div>
+                <a class="bntadd" href="/art/create">+</a>
+                <div class="list">
+                    <div class="thead" style="display: flex">
+                        <b>STT</b>
+                        <b class="thtitle">Title</b>
+                        <b class="thtitle">image</b>
+                        <b class="thtitle">source</b>
+                        <b class="thinfo">info</b>
+                        <b class="Delete">option</b>
                     </div>
-                    <a class="bntadd" href="/art/create">+</a>
-                    <div class="list">
-                        <div class="thead" style="display: flex">
-                            <b>STT</b>
-                            <b class="thtitle">Title</b>
-                            <b class="thtitle">image</b>
-                            <b class="thtitle">source</b>
-                            <b class="thinfo">info</b>
-                            <b class="Delete">option</b>
-                        </div>
-
-
-                        <div class="tbody">
-                            <% arts.forEach((i, index)=> { %>
-                                <div class="oneobject">
-                                    <div class="stt">
-                                        <%= index + 1 %>
-                                    </div>
-                                    <div class="tdtitle">
-                                        <%= i.title %>
-                                    </div>
-                                    <div class="tdtitle styleimg">
-                                        <img src="/uploads/<%=i.image%>" alt="<%=i.name%>"
-                                            style="height: 159px; width: 106px; border-radius: 6px;">
-                                    </div>
-                                    <div class="tdtitle">
-                                        <%= i.source %>
-                                    </div>
-                                    <div class="borderinfo">
-                                        <div class="td">
-                                            <%= i.info %>
-                                        </div>
-                                    </div>
-
-                                    <div class="option">
-                                        <a class="achange" href="/art/<%= i._id %>/formedit"><i
-                                                class="fa-solid fa-pen-to-square" style="color: #000000;"></i></a>
-                                        <a class="adel" data-id="<%= i._id %>"><i class="fa-solid fa-trash"
-                                                style="color: #000000;"></i></a>
-                                    </div>
+    
+                    <div class="tbody">
+                        <% arts.forEach((art, index) => { %>
+                        <div class="oneobject">
+                            <div class="stt">
+                                <%= index + 1 %>
+                            </div>
+                            <div class="tdtitle">
+                                <%= art.title %>
+                            </div>
+                            <div class="tdtitle styleimg">
+                                <% if (art.image) { %>
+                                    <img src="/uploads/<%= art.image.listimage %>" class="displayimg">
+                                <% } %>
+                            </div>
+                            <div class="tdtitle">
+                                <%= art.source %>
+                            </div>
+                            <div class="borderinfo">
+                                <div class="td">
+                                    <%= art.info %>
                                 </div>
-                                <% }) %>
+                            </div>
+    
+                            <div class="option">
+                                <a class="achange" href="/art/<%= art._id %>/formedit"><i class="fa-solid fa-pen-to-square"
+                                        style="color: #000000;"></i></a>
+                                <a class="adel" data-id="<%= art._id %>"><i class="fa-solid fa-trash"
+                                        style="color: #000000;"></i></a>
+                            </div>
                         </div>
+                        <% }) %>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 

@@ -5,78 +5,134 @@
 <body>
     <div class="formadd">
         <div class="itemleft">
-            <h1>artifacts/art(Edit!)</h1>
+            <h1>artifacts/art (update!)</h1>
             <div class="itemadd">
-                <form method="POST" action="/art/<%= Art._id %>?_method=PUT" enctype="multipart/form-data">
-                    <div class="bentrai">
-                        <div class="form-group">
-                            <label for="title">Title*</label>
-                            <input type="text" class="inputaddart" id="title" name="title">
-                        </div>
-                        <div class="form-group">
-                            <label>Image*</label>
-                            <input type="file" class="bntimg" id="image" name="image" accept="image/*"
-                                onchange="previewImage(event)">
-                            <div class="showimg" id="showimg">
-                                <!-- show ảnh -->
+                <form method="POST" action="/art/edit" enctype="multipart/form-data">
+                    <div class="tren">
+                        <div class="trai">
+                            <div class="form-group">
+                                <label for="title">Title*</label>
+                                <input type="text" class="inputaddart" id="title" name="title" value="<%= title %>">
+                                <input type="hidden" id="getID" value="<%= art._id %>">
                             </div>
-                            <!-- <input type="text" class="" id="connect" name="connect" value=""> -->
+                            <div class="abc">
+                                <div class="formselect">
+                                    <label for="source">Source*</label>
+                                    <select class="select" id="source" name="source">
+                                        <%= art.source %>
+                                            <% categories.forEach(category=> { %>
+                                                <option value="<%= category.danhmuc %>" <%=art.source===category.danhmuc
+                                                    ? 'selected' : '' %>>
+                                                    <%= category.danhmuc %>
+                                                </option>
+                                                <% }) %>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-
-                        <label>Multiple image</label>
+                        <div class="phai">
+                            <div class="form-group">
+                                <label for="info" style="margin-left: 10px;">text*</label>
+                                <textarea type="text" class="textarea" id="info" name="info"><%= art.info %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="duoi">
+                        <input type="hidden" class="" id="connect" name="connect" value="<%= connect %>">
+                        <label>Multiple image*</label>
                         <div class="mutiple">
-                            <div onclick="openFileExplorer()" class="itemmutiple">
-                                <b class="b">+</b>
-                            </div>
-                            <div onclick="openFileExplorer()" class="itemmutiple">
-                                <b class="b">+</b>
-                            </div>
-                            <div onclick="openFileExplorer()" class="itemmutiple">
-                                <b class="b">+</b>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="source">Source*</label>
-                            <select class="select" id="source" name="source">
-                                <% categories.forEach(category=> { %>
-                                    <option value="<%= category.danhmuc %>">
-                                        <%= category.danhmuc %>
-                                    </option>
-                                    <% }) %>
-                            </select>
+                            <% images.forEach(image => { %>
+                            <!---->
+                            <input type="hidden" class="" id="location<%= image.location %>" name="location" value="<%= image.location %>">
+                            <label class="custom-file-upload" style="background-image: url('/uploads/<%= image.listimage %>')">
+                                <input type="file" id="fileInput<%= image.location %>" name="listimage" accept="image/*"
+                                    onchange="uploadImage(<%= image.location %>)">
+                                +
+                            </label>
+                            <div class="clearimg cle<%= image.location %>" onclick="clearImage(<%= image.location %>)">✘</div>
+                            <% }); %>
                         </div>
                     </div>
-                    <div class="benphai">
-                        <div class="form-group">
-                            <label for="info">text*</label>
-                            <textarea type="text" class="textarea" id="info" name="info"></textarea>
-                        </div>
-                        <button type="submit" class="bntadd">Thêm </button>
-                    </div>
+                    <div type="submit" class="bntadd" id="add" onclick="changeData()">update </div>
                 </form>
             </div>
         </div>
         <div class="imageright"></div>
     </div>
-
-
     <script>
-        function openFileExplorer() {
-            var input = document.createElement('input');
-            input.type = 'file';
-            input.click();
+        function uploadImage(index) {
+            const input = document.getElementById("fileInput" + index);
+            const label = document.getElementsByClassName("custom-file-upload")[index - 1];
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    label.style.backgroundImage = `url('${e.target.result}')`;
+                    const formData = new FormData();
+                    formData.append('connect', document.getElementById('connect').value);
+                    formData.append('location', document.getElementById('location' + index).value);
+                    formData.append('listimage', input.files[0]);
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/art/saveimage', true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                        }
+                    };
+                    xhr.send(formData);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
         }
-        // show ảnh
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('showimg');
-                output.style.backgroundImage = 'url(' + reader.result + ')';
+        function clearImage(index) {
+            const label = document.getElementsByClassName("custom-file-upload")[index - 1];
+            label.style.backgroundImage = null;
+
+            const connect = document.getElementById('connect').value;
+            const location = document.getElementById('location' + index).value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/art/deleteimage', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                    } else {
+                    }
+                }
             };
-            reader.readAsDataURL(event.target.files[0]);
+            const data = JSON.stringify({ connect: connect, location: parseInt(location) });
+            xhr.send(data);
         }
     </script>
+
+    <script>
+        function changeData() {
+            var artID = document.getElementById('getID').value;
+            var title = document.getElementById('title').value;
+            var source = document.getElementById('source').value;
+            var info = document.getElementById('info').value;
+
+            fetch(`/art/${artID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title: title, source: source, info: info }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.href = "/art/viewart";
+                })
+                .catch(error => {
+                });
+        }
+    </script>
+
+
 
 </body>

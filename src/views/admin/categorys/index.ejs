@@ -23,7 +23,7 @@
           </div>
           <form id="categoryForm" method="POST" action="/me/add" enctype="multipart/form-data">
             <div class="addctgr">
-              <input type="text" name="danhmuc" class="input" id="danhmuc" placeholder="nhập danh mục">
+              <input type="text" name="danhmuc" class="input" id="danhmuc" placeholder="nhập danh mục" autocomplete="off">
               <button type="button" class="submit" onclick="saveData()" id="add">+</button>
             </div>
             <div class="showdanhmuc">
@@ -42,7 +42,8 @@
                     <div class="td">
                       <%= category.danhmuc %>
                     </div>
-                    <div class="achange" onclick="getCategoryId('<%= category._id %>')"><i class="fa-solid fa-pen-to-square" style="color: #000000;"></i></div>
+                    <div class="achange" onclick="openForm('<%= category._id %>')"><i
+                        class="fa-solid fa-pen-to-square" style="color: #000000;"></i></div>
                     <a class="adel" data-id="<%= category._id %>"><i class="fa-solid fa-trash"
                         style="color: #000000;"></i></a>
                   </div>
@@ -53,8 +54,8 @@
                     <div class="borderedit">
                       <div style="height: 100%;">
                         <h1>Change</h1>
-                        <div class="close">
-                          <b style="color: white;">hủy</b>
+                        <div class="close" onclick="closeForm()">
+                          <b style="color: white; user-select: none;">hủy</b>
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                           <input type="hidden" value="<%= category._id %>" id="getID">
@@ -75,11 +76,9 @@
 
   <script>
     function getCategoryId(id) {
-        document.getElementById('getID').value = id;
+      document.getElementById('getID').value = id;
     }
   </script>
-
-
 
 
   <script>
@@ -112,21 +111,21 @@
 
 
   <script>
-    const buttons = document.querySelectorAll('.achange');
-    const formedit = document.querySelector('.formedit');
-    const x = document.querySelectorAll('.close');
+    function openForm(id) {
+      const formedit = document.querySelector('.formedit');
+      const inputEdit = document.querySelector('.inputedit');
+      const getID = document.getElementById('getID');
+      document.getElementById('getID').value = id;
+      formedit.style.display = 'flex';
+      getID.value = id;
 
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        formedit.style.display = 'flex';
-      });
-    });
-
-    x.forEach(button => {
-      button.addEventListener('click', () => {
-        formedit.style.display = 'none';
-      });
-    });
+      const tdValue = document.querySelector(`.td[data-id='${id}']`).textContent;
+      inputEdit.value = tdValue;
+    }
+    function closeForm() {
+      const formedit = document.querySelector('.formedit');
+      formedit.style.display = 'none';
+    }
   </script>
 
 

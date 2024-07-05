@@ -34,7 +34,6 @@ body {
     width: auto;
     width: 96%;
     height: 90%;
-    /* box-shadow: 0px 10px 10px 5px rgba(80, 80, 80, 0.2); */
 }
 
 .inputaddart,
@@ -57,7 +56,7 @@ label {
     font-weight: bold;
     font-size: 18px;
 }
-
+/* 
 .bntimg {
     background-color: #F7F4EF;
     color: gray;
@@ -65,9 +64,9 @@ label {
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
-}
+} */
 
-.showimg {
+/* .showimg {
     height: 200px;
     width: 133px;
     background-color: #F6F6FF;
@@ -75,7 +74,7 @@ label {
     border: 3px dashed #bbbbf0;
     background-size: cover;
     background-position: center;
-}
+} */
 
 .tren {
     width: 100%;
@@ -90,7 +89,6 @@ label {
     height: 100%;
     width: 65%;
 }
-
 
 
 .textarea {
@@ -121,6 +119,10 @@ label {
     font-weight: 700;
     color: #05273B;
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
 }
 
 h1 {
@@ -193,7 +195,7 @@ input[type="file"] {
 }
 
 .formselect {
-    width: 50%;
+    width: 100%;
 }
 
 .formgetimg {

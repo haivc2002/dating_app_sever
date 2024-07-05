@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/fomatform.css">
+    <link rel="stylesheet" href="/css/visitor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="formborder">
+            <%- include("../shared/layout.ejs") %>
+                <div class="page">
+                    <div style="height: 50px; width: 85%">
+                        <h1>Visitor</h1>
+                    </div>
+                    <div class="visitor-form">
+                        <div class="formcmt">
+                          <div class="scrolllist">
+                            <% cmts.forEach(cmt => { %>
+                              <div class="frameobject" onclick="redirectToDetail('<%= cmt.idart && cmt.idart._id %>')">
+                                <input type="hidden" value="<%= cmt.idart && cmt.idart._id ? cmt.idart._id : 'default-id' %>">
+                                <img src="/uploads/<%= cmt.idvisitor && cmt.idvisitor.avt ? cmt.idvisitor.avt : 'default-avatar.jpg' %>" class="displayimg">
+                                <div class="iconcmt">
+                                  <i class="fa-solid fa-comment" style="color: #ffffff;"></i>
+                                </div>
+                                <b class="namevisitor">
+                                  <%= cmt.idvisitor ? cmt.idvisitor.tendangnhap : 'Khách không xác định' %>
+                                </b>
+                                đã bình luận bài viết của bạn
+                                <b class="namevisitor">
+                                  <%= cmt.idart ? cmt.idart.title : 'Bài viết không xác định' %>
+                                </b>
+                              </div>
+                            <% }) %> 
+                          </div>
+                        </div>
+
+
+                        <div class="visitor-show-container">
+                            <div class="visitor-show-body" id="visitor-show">
+                                <div style="height: 96%; width: 100%; display: grid; place-items: center;">
+                                  <% visitors.forEach(visitor => { %>
+                                    <div class="oneobject">
+                                      <div>
+                                        <img src="/uploads/<%= visitor.avt ? visitor.avt : 'default-avatar.jpg' %>" class="displayimg">
+                                      </div>
+                                      <div>
+                                        <div style="color: rgb(220, 220, 220); margin-top: 5px; font-size: 20px;">
+                                          @<%= visitor.tendangnhap %>
+                                        </div>
+                                        <div style="font-size: 15px; color: gray;">
+                                          đã trở thành khách tham quan của bạn
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <% }) %>
+                                </div>
+                            </div>
+                            <div class="visitor-bnt" onclick="toggleAnimation()" id="visitor-bnt">
+                                <div
+                                    style="height: 26px; width: 80px; display: flex; justify-content: center; align-items: center;">
+                                    <i class="fa-solid fa-user hidel"
+                                        style="color: #ffffff; font-size: 0.7em; margin-right: 5px;"></i>
+                                    visitor
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+    <script>
+        let isButtonClicked = false;
+
+        function toggleAnimation() {
+            const visitorShowBody = document.getElementById('visitor-show');
+            const visitorButton = document.getElementById('visitor-bnt');
+            if (!isButtonClicked) {
+                visitorShowBody.classList.remove('animation2');
+                visitorShowBody.classList.add('animation');
+                isButtonClicked = true;
+            } else {
+                visitorShowBody.classList.remove('animation');
+                visitorShowBody.classList.add('animation2');
+                isButtonClicked = false;
+            }
+        }
+    </script>
+
+    <script>
+        function redirectToDetail(artId) {
+            window.location.href = 'http://localhost:3000/detail/' + artId;
+        }
+    </script>
+
+
+</body>
+
+</html>
+
+

@@ -170,4 +170,5 @@ td {
     width: 80px;
     text-align: center;
     cursor: auto;
+    user-select: none;
 }

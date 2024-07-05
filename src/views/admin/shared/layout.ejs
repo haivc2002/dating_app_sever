@@ -15,7 +15,7 @@
         </a>
     </div>
     <div style="height: 50px; width: 100%; justify-content: center; align-items: center; display: flex;">
-        <a href="#" class="click">
+        <a href="/visitor/getform" class="click">
             <div class="bntnexpage">
                 <p>visitor</p>
             </div>
@@ -29,3 +29,28 @@
         </a>
     </div>
 </div>
+
+<script>
+    const buttons = document.querySelectorAll('.click');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            buttons.forEach(btn => {
+                const buttonItem = btn.querySelector('.bntnexpage');
+                buttonItem.classList.remove('active');
+                if (btn === event.currentTarget) {
+                    buttonItem.classList.add('active');
+                }
+            });
+        });
+    });
+
+    // Kiểm tra URL hiện tại và thêm lớp 'active' cho phần tử tương ứng
+    const currentPath = window.location.pathname;
+    buttons.forEach(button => {
+        const buttonLink = button.getAttribute('href');
+        if (buttonLink === currentPath) {
+            button.querySelector('.bntnexpage').classList.add('active');
+        }
+    });
+</script>

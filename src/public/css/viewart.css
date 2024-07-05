@@ -116,3 +116,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.displayimg {
+    height: 90%;
+    width: 90%;
+    border-radius: 5px;
+}

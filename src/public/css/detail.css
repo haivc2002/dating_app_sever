@@ -1,0 +1,387 @@
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    border: 0;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background: #6d6d6d;
+}
+
+.content {
+    width: 90%;
+    height: auto;
+    margin: auto;
+}
+
+.frameimg {
+    flex: 0 0 auto;
+    height: 80%;
+    width: 1000px;
+    box-sizing: border-box;
+    border: 13px solid black;
+}
+
+.left {
+    height: 100vh;
+    width: 200px;
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 200ms;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    opacity: 0;
+}
+
+.left:hover {
+    opacity: 1;
+}
+
+.right {
+    height: 100vh;
+    width: 200px;
+    position: absolute;
+    right: 35%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    transition: 200ms;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    opacity: 0;
+}
+
+.right:hover {
+    opacity: 1;
+}
+
+.slide-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+h1 {
+    font-family: comic Sans MS;
+    color: white
+}
+
+.backgroud {
+    background-color: #CFCDC9;
+    width: 35%;
+    height: 100vh;
+    overflow-y: auto;
+    border-left: 1px solid #393A3B;
+    animation: colorvariation 200ms forwards;
+}
+
+@keyframes colorvariation {
+    to {
+        background-color: #1E1E1E;
+    }
+}
+
+.indented-text {
+    font-family: comic Sans MS;
+    color: white;
+    line-height: 1.6;
+    text-indent: 30px;
+}
+
+.ahome {
+    font-family: comic Sans MS;
+    font-size: 28px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.framecmt {
+    height: 30px;
+    width: 200px;
+    border-radius: 100px;
+    color: gray;
+    background-color: #393A3B;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+
+.demo {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    width: 100%;
+}
+
+.demo.Dynamic1 {
+    animation: demo 0ms forwards;
+}
+
+@keyframes demo {
+    to {
+        display: none;
+    }
+}
+
+.demo.animate1 {
+    animation: hidedemo 0ms forwards;
+}
+
+@keyframes hidedemo {
+    from {
+        display: none;
+    }
+
+    to {
+        display: flex;
+    }
+}
+
+.cmt {
+    height: 70px;
+    width: 35%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #393A3B;
+    background-color: #1E1E1E;
+    display: flex;
+    align-items: center;
+
+}
+
+.cmt.Dynamic2 {
+    animation: showcmt 300ms forwards
+}
+
+@keyframes showcmt {
+    to {
+        height: 600px;
+    }
+}
+
+.cmt.animate2 {
+    animation: hidecmt 300ms forwards
+}
+
+@keyframes hidecmt {
+    from {
+        height: 600px;
+    }
+
+    to {
+        height: 70px;
+    }
+}
+
+.containercmt {
+    height: 0;
+    width: 100%;
+    opacity: 0;
+}
+
+.containercmt.Dynamic3 {
+    animation: test 200ms forwards;
+}
+
+@keyframes test {
+    to {
+        opacity: 1;
+        height: 100%;
+    }
+}
+
+.containercmt.animate3 {
+    animation: hidecontai 200ms forwards;
+}
+
+@keyframes hidecontai {
+    from {
+        opacity: 1;
+        height: 100%;
+    }
+
+    to {
+        opacity: 0;
+        height: 0;
+    }
+}
+
+.youcmt {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-top: 2px #393A3B solid;
+}
+
+.cmtvisitor {
+    height: 490px;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.coment {
+    height: 30px;
+    width: 300px;
+    outline: 0;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    background-color: #393A3B;
+    border: 0;
+    padding-left: 10px;
+    border-radius: 100px;
+    margin-left: 20px;
+}
+
+.bntadd {
+    color: silver;
+    outline: 0;
+    background-color: transparent;
+    border: 0;
+    font-size: 30px;
+    padding-bottom: 6px;
+    margin-left: 20px;
+}
+
+.hide {
+    height: 30px;
+    width: 30px;
+    background-color: #393A3B;
+    border-radius: 100px;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    user-select: none;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+}
+
+.imgvisitor {
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    margin-left: 20px;
+}
+
+.bordernoidung {
+    height: auto;
+    width: 80%;
+    margin-right: auto;
+    display: flex;
+    margin-bottom: 20px;
+}
+.noidung {
+    display: flex;
+    flex-direction: column;
+    background-color: #393A3B;
+    color: whitesmoke;
+    padding: 10px;
+    border-radius: 8px;
+    margin-left: 10px;
+    font-family: comic Sans MS;
+}
+
+.alllist {
+    height: 110px;
+    width: 998px;
+    left: 0;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+}
+
+.allimg {
+    height: 70%;
+    width: auto;
+    background-color: rgba(82, 82, 82, 0.4);
+    backdrop-filter: blur(18px);
+    border-radius: 10px;
+    border: 2px rgba(128, 128, 128, 0.2) solid;
+    display: flex;
+    cursor: pointer;
+}
+.alllist2 {
+    height: 100%;
+    padding-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -40px;
+    transition: 300ms;
+    opacity: 1;
+    animation: alllist2 300ms 1;
+}
+.alllist2:hover {
+    height: 140%;
+    padding-top: 0px;
+}
+
+@keyframes alllist2 {
+    from {
+        opacity: 0;
+        padding-top: 80px;
+    }
+}
+
+.frameimg2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 300ms;
+    margin: 4px;
+}
+
+.lll {
+    height: 80%; 
+    width: 80%; 
+    object-fit: contain;
+    /* border: 3px rgb(145, 145, 145) solid; */
+    border-radius: 3px;
+    padding: 5px;
+
+}
+
+.frameimg2.selected {
+    border: 3px rgb(145, 145, 145) solid;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+.frameimg2:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.frameimg2.transition {
+    transition: border 0.5s, transform 0.5s;
+}

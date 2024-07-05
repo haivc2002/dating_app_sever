@@ -13,13 +13,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.get('/viewart', artController.getform);
+router.get('/viewart', artController.getForm);
 router.get('/create', artController.formadd);
 router.post('/add', artController.add);
 router.post('/saveimage', upload.single('listimage'), artController.saveImage);
 router.post('/deleteimage', artController.deleteImage);
-// router.get('/:id/formedit', artController.formedit);
-// router.put('/:id', artController.edit);
+router.get('/:id/formedit', artController.formedit);
+router.put('/:id', artController.edit);
 router.delete('/:id', artController.dele);
 
 

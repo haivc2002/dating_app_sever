@@ -1,0 +1,348 @@
+.hearder {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    backdrop-filter: blur(30px);
+    z-index: 9999;
+    opacity: 1;
+    background-color: rgba(207, 205, 201, 0.6);
+}
+
+.hearder.hidehearder {
+    animation: header 200ms forwards;
+}
+
+@keyframes header {
+    to {
+        opacity: 0;
+    }
+}
+
+.container {
+    height: 100%;
+    /* margin-top: -100px; */
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    border: 0;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background: #6d6d6d;
+    display: none;
+}
+
+.divimage {
+    width: 70%;
+    height: auto;
+    cursor: pointer;
+    display: flex;
+    place-content: center;
+}
+
+.divimage.showOnlyAnimation {
+    animation: divimage 400ms forwards;
+}
+
+@keyframes divimage {
+    to {
+        height: 600px;
+        width: 100%;
+    }
+}
+
+.border {
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 150px;
+}
+
+.border.showOnlyAnimation {
+    animation: borders 400ms forwards;
+}
+
+@keyframes borders {
+    to {
+        padding-top: 0px;
+        width: 65%;
+        height: 100vh;
+        justify-content: center;
+        background-color: black;
+    }
+}
+
+.bordertitle {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 200ms;
+    border-radius: 8px;
+}
+
+.bordertitle.hidebordertitle {
+    animation: bordertitle 0ms forwards;
+}
+
+@keyframes bordertitle {
+    to {
+        display: none;
+    }
+}
+
+.bordertitle:hover {
+    opacity: 1;
+    backdrop-filter: blur(2px);
+}
+
+.displayimg {
+    width: 100%;
+    height: 600px;
+    border-radius: 10px;
+    border: 5px solid gray;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 40px;
+
+}
+
+.displayimg.hideborder {
+    animation: displayimg 400ms forwards;
+}
+
+@keyframes displayimg {
+    to {
+        border: 10px solid black;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+}
+
+.title {
+    color: #A5A19D;
+    font-family: comic Sans MS;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: underline;
+    user-select: none;
+}
+
+.changicon {
+    margin-right: 10px;
+    font-size: 17px;
+    font-family: comic Sans MS;
+}
+
+/*  */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    margin-right: 20px;
+    border: 2px solid black;
+    border-radius: 100px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 23px;
+    width: 23px;
+    left: 1px;
+    bottom: 0px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #000000;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #000000;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.bordertitle2:hover {
+    opacity: 1;
+    backdrop-filter: blur(2px);
+}
+.title2 {
+    color: #A5A19D;
+    font-family: comic Sans MS;
+    font-size: 20px;
+    font-weight: 550;
+    text-decoration: underline;
+    user-select: none;
+}
+
+.border2 {
+    height: auto;
+    display: none;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 150px;
+    /* animation: changeborder 400ms forwards; */
+}
+.border2.dynamic {
+    animation: changeborder 400ms forwards;
+}
+
+.displayimg2 {
+    height: 200px;
+    width: 354px;
+    margin: 40px;
+    border-radius: 10px;
+    background-size: cover;
+    border: 2px black solid;
+    cursor: pointer;
+    /* animation: test2 400ms forwards; */
+
+}
+.displayimg2.dynamic {
+    animation: test2 400ms forwards;
+}
+
+.bordertitle2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: 200ms;
+}
+
+.bordertitle2.hide {
+    animation: hidebordertitle2 0ms forwards;
+}
+@keyframes hidebordertitle2 {
+    to {
+        display: none;
+    }
+}
+@keyframes changeborder {
+    to {
+        width: 65%;
+        height: 100vh;
+        background-color: black;
+        /* flex-wrap: nowrap;
+        flex-direction: column; */
+        padding-top: 40px;
+
+    }
+}
+@keyframes test2 {
+    to {
+        border: 10px solid rgb(0, 0, 0);
+        padding: 10px;
+        box-sizing: border-box;
+        height: 600px;
+        width: 995px;
+        margin: 0;
+        margin-top: -30px;
+    }
+}
+
+.disappear {
+    background-image: url(/imge/fake.png); 
+    background-repeat: no-repeat; 
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    opacity: 1;
+    z-index: 10000;
+    animation: disappear 200ms forwards;
+    animation-delay: 500ms;
+}
+
+@keyframes disappear {
+    to {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.load {
+    width: 100%;
+    height: 5px;
+    background-color: #3F3F3F;
+}
+
+.run {
+    height: 5px;
+    width: 10%;
+    background-color: white;
+    animation: run 700ms forwards;
+}
+@keyframes run {
+    80% {
+        width: 80%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.blurclass {
+    height: 100%; 
+    width: 100%; 
+    background-color: rgba(0, 0, 0, 0.3);
+    animation: blurclass 200ms forwards;
+    animation-delay: 500ms;
+}
+
+@keyframes blurclass {
+    to {
+        background-color: rgba(0, 0, 0, 0);
+    }
+}

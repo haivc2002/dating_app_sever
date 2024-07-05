@@ -5,6 +5,8 @@ const AuthController = {
   getLogin: (req, res) => {
     res.render('admin/login');
   },
+
+  
   postLogin: async (req, res) => {
     const { tendangnhap, password } = req.body;
     try {
@@ -23,9 +25,27 @@ const AuthController = {
       res.status(500).send('Lỗi server.');
     }
   },
-  getSignup: (req, res) => {
-    res.render('signup');
+
+
+  getRegister: async (req, res) => {
+    res.render('register');
   },
+
+  postRegister: (req, res) => {
+    const nameR = req.body.nameR;
+    const emailR = req.body.emailR;
+    const passwordR = req.body.passwordR;
+    const avatarR  = req.file ? "http://192.168.1.152:3000/uploadtest/" + path.basename(req.file.path) : "https://i.pinimg.com/564x/29/b8/d2/29b8d250380266eb04be05fe21ef19a7.jpg";
+
+    db.serialize(() => {
+        db.run('CREATE TABLE IF NOT EXISTS userAdmin (nameR TEXT, emailR TEXT, passwordR TEXT, avatarR TEXT)');
+        const stmt = db.prepare('INSERT INTO userAdmin (nameR, emailR, passwordR, avatarR) VALUES (?, ?, ?, ?)');
+        stmt.run(nameR, emailR, passwordR, avatarR);
+        stmt.finalize();
+    });
+    res.send('Dữ liệu đã được thêm vào SQLite');
+  },
+  
   postLogout: (req, res) => {
     req.session.destroy((err) => {
       if (err) {
@@ -34,24 +54,8 @@ const AuthController = {
       res.redirect('/auth/login');
     });
   },
-  postSignup: async (req, res) => {
-    if (req.session.isAdmin) {
-      res.status(403).send('Bạn không có quyền đăng ký.');
-    } else {
-      const data = {
-        tendangnhap: req.body.tendangnhap,
-        password: req.body.password
-      };
 
-      const existingUser = await User.findOne({ tendangnhap: data.tendangnhap });
-      if (existingUser) {
-        res.status(400).send('Tên đăng nhập đã tồn tại.');
-      } else {
-        await User.insertMany([data]);
-        res.redirect('http://localhost:3000/auth/login');
-      }
-    }
-  }
+
 };
 
 module.exports = AuthController;

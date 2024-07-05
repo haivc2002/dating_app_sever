@@ -58,6 +58,17 @@ const categoryController = {
       console.error('Error updating category: ', error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  }
+  },
+
+  showdatajson: (req, res) => {
+    Category.find({}, (err, categories) => {
+        if (err) {
+            console.error('Lỗi truy vấn danh mục:', err);
+            res.status(500).json({ error: 'Lỗi server.' });
+        } else {
+            res.json(categories);
+        }
+    });
+}
 }
 module.exports = categoryController;

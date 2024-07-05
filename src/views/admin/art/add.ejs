@@ -3,7 +3,6 @@
 </head>
 
 <body>
-
     <div class="formadd">
         <div class="itemleft">
             <h1>artifacts/art</h1>
@@ -26,18 +25,6 @@
                                             <% }) %>
                                     </select>
                                 </div>
-
-                                <div class="formgetimg">
-                                    <label>Image*</label>
-                                    <label class="fileexplorrer">
-                                        <input type="file" class="bntimg" id="image" name="image" accept="image/*"
-                                            onchange="previewImage(event)">
-                                        file explorrer
-                                    </label>
-                                    <div class="showimg" id="showimg">
-
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="phai">
@@ -47,10 +34,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <form method="POST" action="/art/savelistimg" enctype="multipart/form-data"> -->
                     <div class="duoi">
                         <input type="hidden" class="" id="connect" name="connect" value="<%= maxConnect %>">
-                        <label>Multiple image</label>
+                        <label>Multiple image*</label>
                         <div class="mutiple">
                             <!---->
                             <input type="hidden" class="" id="location1" name="location" value="1">
@@ -82,27 +68,21 @@
                                 +
                             </label>
                             <div class="clearimg cle4" onclick="clearImage(4)">✘</div>
+                            <!---->
+                            <input type="hidden" class="" id="location5" name="location" value="5">
+                            <label class=" custom-file-upload">
+                                <input type="file" id="fileInput5" name="" onchange="uploadImage(5)" />
+                                +
+                            </label>
+                            <div class="clearimg cle5" onclick="clearImage(5)">✘</div>
                         </div>
                     </div>
-                    <button type=" submit" class="bntadd">Thêm </button>
+                    <button type=" submit" class="bntadd" onclick="saveData()" id="add">Thêm </button>
                 </form>
             </div>
         </div>
         <div class="imageright"></div>
     </div>
-    <!--  -->
-    <script>
-        // show ảnh
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('showimg');
-                output.style.backgroundImage = 'url(' + reader.result + ')';
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    </script>
-
     <script>
         function uploadImage(index) {
             const input = document.getElementById("fileInput" + index);
@@ -152,4 +132,30 @@
         }
     </script>
 
+    <script>
+        function saveData() {
+            event.preventDefault();
+            const title = document.getElementById("title").value;
+            const source = document.getElementById("source").value;
+            const info = document.getElementById("info").value;
+            const connect = document.getElementById("connect").value;
+
+            fetch('/art/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title: title, source: source, info: info, connect: connect }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.href = "/art/viewart";
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 </body>
