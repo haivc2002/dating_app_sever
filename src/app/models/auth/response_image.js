@@ -1,8 +1,7 @@
 class ResponseInfo {
-    constructor({ result, message = null, idUser = null}) {
+    constructor({ result, message = null}) {
       this.result = result;
       this.message = message;
-      this.idUser = idUser;
     }
   }
   

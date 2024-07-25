@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database(':memory:');
+const db = new sqlite3.Database('mydatabase.db');
 
 class Query {
   static tableUser() {
@@ -22,10 +22,29 @@ class Query {
           lon REAL,
           describeYourself TEXT,
           gender TEXT,
-          premiumState TEXT,
-          idCompatible INT,
-          idImage INT,
-          idInfoMore INT
+          premiumState TEXT
+        )
+      `);
+    });
+  }
+
+  static tableListImage() {
+    db.serialize(()=> {
+      db.run('CREATE TABLE IF NOT EXISTS listImage (id INT, idUser INT, image TEXT)');
+    });
+  }
+
+  static tableInfoMore() {
+    db.serialize(()=> {
+      db.run(`
+        CREATE TABLE IF NOT EXISTS infoMore (
+          idUser INT,
+          height INT,
+          wine TEXT,
+          somking TEXT,
+          zodiac TEXT,
+          religion TEXT,
+          hometown TEXT
         )
       `);
     });

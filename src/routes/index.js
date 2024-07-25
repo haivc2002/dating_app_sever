@@ -1,12 +1,13 @@
 const clientRouter = require('./clientMobile/auth')
 
-const authRouter = require('./auth/register')
+const authRouter = require('./auth/auth_route')
+
 
 
 function route(app) {
     //test
     app.use('/client', clientRouter)
     
-    app.use('/auth', authRouter)
+    app.use('/auth', authRouter);
 }
 module.exports = route;
