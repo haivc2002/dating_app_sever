@@ -7,6 +7,9 @@ const ResponseInfo = require('../models/auth/response_infor');
 const ResponseImage = require('../models/auth/response_image');
 const RegisterFunction = require('../functions/register_function');
 const Query = require('../init/query');
+const nodemailer = require('nodemailer');
+const path = require('path');
+
 
 Query.tableUser();
 Query.tableInfo();
@@ -155,7 +158,8 @@ const RegisterController = {
   },
 
   addImage: (req, res) => {
-    const image = req.body.image;
+    // const image = req.body.image;
+    const image = "http://192.168.70.123:3000/uploads/" + path.basename(req.file.path);
     const idUser = req.body.idUser;
 
     if (!idUser || idUser.trim() === '') {
@@ -202,7 +206,7 @@ const RegisterController = {
       idUser,
       height,
       wine,
-      somking,
+      smoking,
       zodiac,
       religion,
       hometown
@@ -226,12 +230,12 @@ const RegisterController = {
           return res.status(200).json(response);
         } else {
           const request = db.prepare(`
-            INSERT INTO infoMore (idUser, height, wine, somking, zodiac, religion, hometown)
+            INSERT INTO infoMore (idUser, height, wine, smoking, zodiac, religion, hometown)
             VALUES (?,?,?,?,?,?,?)  
           `);
 
           request.run(
-            idUser, height, wine, somking, zodiac, religion, hometown, (err) => {
+            idUser, height, wine, smoking, zodiac, religion, hometown, (err) => {
               if(err) {
                 return res.status(500).json({ error: 'Database error', details: err.message });
               } else {
@@ -248,7 +252,7 @@ const RegisterController = {
         }
       })
     });
-  }
+  },
 };
 
 module.exports = RegisterController;

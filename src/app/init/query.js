@@ -49,6 +49,12 @@ class Query {
       `);
     });
   }
+
+  static tableMatch() {
+    db.serialize(()=> {
+      db.run('CREATE TABLE IF NOT EXISTS match (id INT, idUser INT, keyMatch INT)');
+    });
+  }
 }
 
 module.exports = Query;

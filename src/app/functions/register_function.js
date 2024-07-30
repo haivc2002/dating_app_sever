@@ -7,16 +7,23 @@ class RegisterFunction {
     };
 
     checkNull(message, ...args) {
-        for (const arg of args) {
-          if (!arg || arg.trim() === '') {
-            return new ResponseInfo({
-              result: 'Error',
-              message: message
-            });
+      for (const arg of args) {
+          if (typeof arg === 'string' && arg.trim() === '') {
+              return new ResponseInfo({
+                  result: 'Error',
+                  message: message
+              });
           }
-        }
-        return null;
-    }
+          if (arg === undefined || arg === null) {
+              return new ResponseInfo({
+                  result: 'Error',
+                  message: message
+              });
+          }
+      }
+      return null;
+  }
+  
 }
 
 module.exports = RegisterFunction;
