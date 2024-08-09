@@ -111,14 +111,22 @@ const RegisterController = {
       lat,
       lon,
       describeYourself,
+      height,
+      wine,
+      smoking,
+      religion,
+      hometown
     } = req.body;
   
     const premiumState = false;
-
+  
     const response = functions.checkNull('idUser null or empty', idUser);
     if (response) {
       return res.status(200).json(response);
     }
+  
+    const [day, month, year] = birthday.split('/').map(Number);
+    const zodiac = functions.getZodiacSign(day, month);
   
     db.serialize(() => {
       db.get('SELECT idUser FROM info WHERE idUser = ?', [idUser], (err, row) => {
@@ -131,24 +139,39 @@ const RegisterController = {
           });
           return res.status(200).json(response);
         } else {
-          const stmt = db.prepare(`INSERT INTO info (
+          const stmtInfo = db.prepare(`INSERT INTO info (
             idUser, name, birthday, desiredState, gender, word, academicLevel, lat, lon, describeYourself, 
             premiumState
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
   
-          stmt.run(
+          stmtInfo.run(
             idUser, name, birthday, desiredState, gender, word, academicLevel, lat, lon, describeYourself, premiumState,
             (err) => {
               if (err) {
                 return res.status(500).json({ error: 'Database error', details: err.message });
               } else {
-                stmt.finalize();
-                const response = new ResponseInfo({
-                  result: 'Success',
-                  idUser: idUser,
-                  message: 'Register info success'
-                });
-                return res.json(response);
+                stmtInfo.finalize();
+  
+                const stmtInfoMore = db.prepare(`INSERT INTO infoMore (
+                  idUser, height, wine, smoking, zodiac, religion, hometown
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)`);
+  
+                stmtInfoMore.run(
+                  idUser, height, wine, smoking, zodiac, religion, hometown,
+                  (err) => {
+                    if (err) {
+                      return res.status(500).json({ error: 'Database error', details: err.message });
+                    } else {
+                      stmtInfoMore.finalize();
+                      const response = new ResponseInfo({
+                        result: 'Success',
+                        idUser: idUser,
+                        message: 'Register info success'
+                      });
+                      return res.json(response);
+                    }
+                  }
+                );
               }
             }
           );
@@ -158,7 +181,6 @@ const RegisterController = {
   },
 
   addImage: (req, res) => {
-    // const image = req.body.image;
     const image = "http://192.168.70.123:3000/uploads/" + path.basename(req.file.path);
     const idUser = req.body.idUser;
 
