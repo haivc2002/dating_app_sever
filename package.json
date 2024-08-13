@@ -30,7 +30,8 @@
         "nodemailer": "^6.9.14",
         "sqlite3": "^5.1.7",
         "sweetalert": "^2.1.2",
-        "uuid": "^10.0.0"
+        "uuid": "^10.0.0",
+        "ws": "^8.18.0"
     },
     "devDependencies": {
         "@types/node": "^20.14.11",

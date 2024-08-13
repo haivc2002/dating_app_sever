@@ -3,7 +3,7 @@ const express = require('express');
 const methodOverride = require('method-override');
 const app = express();
 var expressLayouts = require('express-ejs-layouts');
-// const bodyParser = require('body-parser');
+const WebSocket = require('ws'); 
 
 const session = require('express-session');
 
@@ -23,13 +23,14 @@ app.use(methodOverride('_method'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
 
 const route = require('./routes');
 route(app);
 
-const port = 3000;
-app.listen(port, () =>
-  console.log(`App is listening on port http://localhost:${port}`)
+
+const server = app.listen(3000, () =>
+  console.log(`App is listening on port http://localhost:3000`)
 );
+
+const startWebSocketServer = require('./config/web_socket_config');
+startWebSocketServer(server);
