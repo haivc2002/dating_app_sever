@@ -9,6 +9,7 @@ const RegisterFunction = require('../functions/register_function');
 const Query = require('../init/query');
 const nodemailer = require('nodemailer');
 const path = require('path');
+const Common = require('../common');
 
 
 Query.tableUser();
@@ -115,19 +116,24 @@ const RegisterController = {
       wine,
       smoking,
       religion,
-      hometown
+      hometown,
+      deadline
     } = req.body;
-  
+
     const premiumState = false;
-  
-    const response = functions.checkNull('idUser null or empty', idUser);
+    let response = functions.checkNull('idUser null or empty', idUser);
     if (response) {
       return res.status(200).json(response);
     }
-  
+
+    response = functions.checkNull('Birthday null or empty', birthday);
+    if (response) {
+      return res.status(200).json(response);
+    }
+
     const [day, month, year] = birthday.split('/').map(Number);
     const zodiac = functions.getZodiacSign(day, month);
-  
+
     db.serialize(() => {
       db.get('SELECT idUser FROM info WHERE idUser = ?', [idUser], (err, row) => {
         if (err) {
@@ -140,22 +146,23 @@ const RegisterController = {
           return res.status(200).json(response);
         } else {
           const stmtInfo = db.prepare(`INSERT INTO info (
-            idUser, name, birthday, desiredState, gender, word, academicLevel, lat, lon, describeYourself, 
-            premiumState
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-  
+                    idUser, name, birthday, desiredState, gender, word, academicLevel, lat, lon, describeYourself, 
+                    premiumState, deadline
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+
           stmtInfo.run(
             idUser, name, birthday, desiredState, gender, word, academicLevel, lat, lon, describeYourself, premiumState,
+            deadline || null,
             (err) => {
               if (err) {
                 return res.status(500).json({ error: 'Database error', details: err.message });
               } else {
                 stmtInfo.finalize();
-  
+
                 const stmtInfoMore = db.prepare(`INSERT INTO infoMore (
-                  idUser, height, wine, smoking, zodiac, religion, hometown
-                ) VALUES (?, ?, ?, ?, ?, ?, ?)`);
-  
+                                idUser, height, wine, smoking, zodiac, religion, hometown
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?)`);
+
                 stmtInfoMore.run(
                   idUser, height, wine, smoking, zodiac, religion, hometown,
                   (err) => {
@@ -181,7 +188,7 @@ const RegisterController = {
   },
 
   addImage: (req, res) => {
-    const image = "http://192.168.70.123:3000/uploads/" + path.basename(req.file.path);
+    const image = Common.urlDefault + path.basename(req.file.path);
     const idUser = req.body.idUser;
 
     if (!idUser || idUser.trim() === '') {

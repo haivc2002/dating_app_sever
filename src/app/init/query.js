@@ -1,5 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('mydatabase.db');
+const fs = require('fs');
+const path = require('path');
 
 class Query {
   static tableUser() {
@@ -133,43 +135,6 @@ class Query {
     });
   }
 
-  static updateImage(image, idUser) {
-    return new Promise((resolve, reject) => {
-      if (image.id) {
-        db.run(
-          `UPDATE listImage SET image = ? WHERE id = ? AND idUser = ?`,
-          [image.image, image.id, idUser],
-          (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve();
-            }
-          }
-        );
-      } else {
-        db.get('SELECT MAX(id) as maxId FROM listImage', (err, row) => {
-          if (err) {
-            reject(err);
-          } else {
-            const id = row.maxId !== null ? row.maxId + 1 : 0;
-            db.run(
-              `INSERT INTO listImage (id, idUser, image) VALUES (?, ?, ?)`,
-              [id, idUser, image.image],
-              (err) => {
-                if (err) {
-                  reject(err);
-                } else {
-                  resolve();
-                }
-              }
-            );
-          }
-        });
-      }
-    });
-  }
-
   static updateLocation(lat, lon, idUser) {
     return new Promise((resolve, reject) => {
       db.run(
@@ -188,6 +153,71 @@ class Query {
       );
     });
   }
+
+  static tableMessage() {
+    db.serialize(()=> {
+      db.run('CREATE TABLE IF NOT EXISTS message (id INT, idUser TEXT, receiver TEXT, content TEXT)');
+      db.run('ALTER TABLE message ADD COLUMN newState BOOLEAN DEFAULT 0', (err) => {
+        if (err) {
+            if (!err.message.includes("duplicate column name")) {
+              console.error('Lỗi khi thêm cột newState:', err.message);
+            }
+        }
+      });
+    });
+  }
+
+  static updateImage(id, image) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        `UPDATE listImage SET image = ? WHERE id = ?`,
+        [image, id],
+        (err) => {
+          if (err) {
+            console.error("Error updating image:", err);
+            reject(err);
+          } else {
+            resolve();
+          }
+        }
+      );
+    });
+  }
+
+  static deleteImageById(id) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        `DELETE FROM listImage WHERE id = ?`,
+        [id],
+        (err) => {
+          if (err) {
+            console.error("Error deleting image:", err);
+            reject(err);
+          } else {
+            resolve();
+          }
+        }
+      );
+    });
+  }
+  
+  static getImageById(id) {
+    return new Promise((resolve, reject) => {
+      db.get(
+        `SELECT * FROM listImage WHERE id = ?`,
+        [id],
+        (err, row) => {
+          if (err) {
+            console.error("Error retrieving image:", err);
+            reject(err);
+          } else {
+            resolve(row);
+          }
+        }
+      );
+    });
+  }
+
 }
 
 module.exports = Query;

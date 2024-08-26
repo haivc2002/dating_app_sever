@@ -1,35 +1,25 @@
 const WebSocket = require('ws');
 const Functions = require('../app/functions/query_all_get');
+const TodoSocket = require('./todo_socket');
 
 const functions = new Functions();
+const todo_socket = new TodoSocket();
 
 function startWebSocketServer(server) {
     const wss = new WebSocket.Server({ server });
 
-    wss.on('connection', (ws, request) => {
-        // console.log('Client connected');
-
+    wss.on('connection', (ws) => {
         ws.on('message', async (message) => {
             try {
-                const { idUser } = JSON.parse(message);
+                const data = JSON.parse(message);
+                const { type, idUser, receiver, id } = data;
 
-                if (idUser) {
-                    const result = await functions.dbGet(
-                        `SELECT COUNT(*) as matchCount FROM match m1
-                         JOIN match m2 ON m1.idUser = m2.keyMatch AND m1.keyMatch = m2.idUser
-                         WHERE m1.idUser = ? AND m1.newState = true`,
-                        [idUser]
-                    );
-
-                    if (result && result.matchCount !== undefined) {
-                        if (ws.readyState === WebSocket.OPEN) {
-                            ws.send(JSON.stringify({ result: 'Success', matchCount: result.matchCount }));
-                        }
-                    } else {
-                        ws.send(JSON.stringify({ error: 'No match data found' }));
-                    }
+                if (type === 'match') {
+                    todo_socket.notificationLocal(idUser, ws);
+                } else if (type === 'getMessages') {
+                    todo_socket.getMessageObject(idUser, receiver, id, ws);
                 } else {
-                    ws.send(JSON.stringify({ error: 'idUser parameter is required' }));
+                    ws.send(JSON.stringify({ error: 'Invalid message type' }));
                 }
             } catch (err) {
                 if (ws.readyState === WebSocket.OPEN) {
@@ -39,7 +29,6 @@ function startWebSocketServer(server) {
         });
 
         ws.on('close', () => {
-            // console.log('Client disconnected');
         });
 
         ws.send(JSON.stringify({ message: 'Connected to WebSocket server' }));
@@ -49,4 +38,3 @@ function startWebSocketServer(server) {
 }
 
 module.exports = startWebSocketServer;
-

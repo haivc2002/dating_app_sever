@@ -177,28 +177,19 @@ const MatchController = {
     },
 
     checkNewState: async (req, res) => {
-        const { id, newState } = req.body;
-
-        if (!id || newState === undefined) {
-            return res.status(400).json({ error: 'id and newState are required' });
+        const { idUser, keyMatch } = req.body;
+    
+        if (!idUser || !keyMatch) {
+            return res.status(400).json({ error: 'idUser and keyMatch are required' });
         }
-
-        try {
-            const result = await functions.dbRun(
-                `UPDATE match SET newState = ? WHERE id = ?`,
-                [newState, id]
-            );
-
-            if (result) {
-                return res.status(200).json({ result: 'Success', message: 'newState updated successfully' });
-            } else {
-                return res.status(400).json({ error: 'Update failed, no rows affected' });
-            }
-        } catch (err) {
-            return res.status(500).json({ error: 'Database error', details: err.message });
-        }
+    
+        const newState = false;
+        await functions.dbRun(
+            `UPDATE match SET newState = ? WHERE idUser = ? AND keyMatch = ?`,
+            [newState, idUser, keyMatch]
+        );
+        return res.status(200).json({ result: 'Success', message: 'newState updated to false successfully' });
     }
-
 
 }
 
