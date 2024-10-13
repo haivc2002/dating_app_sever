@@ -117,40 +117,7 @@ const MessageController = {
             console.error(err);
             res.status(500).json({ message: 'Internal server error' });
         }
-    
-    
     },
-
-    // isCheckNewMessage: async (req, res) => {
-    //     try {
-    //         const { idUser, id } = req.body;
-    
-    //         if (!idUser || !id) {
-    //             return res.status(400).json({ message: 'Missing required fields: idUser, id' });
-    //         }
-    
-
-    //         const message = await functions.dbGet(`
-    //             SELECT idUser FROM message WHERE id = ?`, [id]);
-    
-    //         if (!message) {
-    //             return res.status(404).json({ message: 'Message not found' });
-    //         }
-    
-    //         if (message.idUser !== idUser) {
-    //             await functions.dbRun(
-    //                 `UPDATE message 
-    //                  SET newState = false 
-    //                  WHERE id = ?`,
-    //                 [id]
-    //             );
-    //             res.status(200).json({ result: 'Success', message: 'newState updated to false' });
-    //         }
-    //     } catch (err) {
-    //         console.error(err);
-    //         res.status(500).json({ message: 'Internal server error' });
-    //     }     
-    // }
 
     isCheckNewMessage: async (req, res) => {
         try {
@@ -185,7 +152,6 @@ const MessageController = {
             return res.status(500).json({ message: 'Internal server error' });
         }     
     }
-    
     
 }
 

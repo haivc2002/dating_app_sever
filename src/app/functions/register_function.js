@@ -35,9 +35,8 @@ class RegisterFunction {
         ];
       
         return day > lastDay[month - 1] ? zodiacSigns[month] : zodiacSigns[month - 1];
-    }
+    };
         
-  
 }
 
 module.exports = RegisterFunction;

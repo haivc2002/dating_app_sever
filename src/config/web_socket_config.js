@@ -17,7 +17,7 @@ function startWebSocketServer(server) {
                 if (type === 'match') {
                     todo_socket.notificationLocal(idUser, ws);
                 } else if (type === 'getMessages') {
-                    todo_socket.getMessageObject(idUser, receiver, id, ws);
+                    todo_socket.getMessageObject(idUser, receiver, ws);
                 } else {
                     ws.send(JSON.stringify({ error: 'Invalid message type' }));
                 }

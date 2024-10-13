@@ -3,7 +3,8 @@ const express = require('express');
 const methodOverride = require('method-override');
 const app = express();
 var expressLayouts = require('express-ejs-layouts');
-const WebSocket = require('ws'); 
+const WebSocket = require('ws');
+const cookieParser = require('cookie-parser');
 
 const session = require('express-session');
 const ip = require('./config/get_ip'); 
@@ -25,6 +26,7 @@ app.use(session({
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 
 app.use(methodOverride('_method'));
 

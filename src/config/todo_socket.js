@@ -58,26 +58,34 @@ class TodoSocket {
     //     }
     // }
 
-    async getMessageObject(idUser, receiver, id, ws) {
+    async getMessageObject(idUser, receiver, ws) {
         if (idUser && receiver) {
+            // Truy vấn để lấy tin nhắn
             const messages = await functions.dbAll(`
                 SELECT id, idUser, receiver, content, newState 
                 FROM message 
                 WHERE (idUser = ? AND receiver = ?) OR (idUser = ? AND receiver = ?)
                 ORDER BY id DESC
             `, [idUser, receiver, receiver, idUser]);
+    
+            // Lấy giá trị id lớn nhất từ danh sách tin nhắn
+            const maxId = messages.length > 0 ? messages[0].id : null;
+    
             const formattedMessages = messages.map(message => ({
                 ...message,
                 idUser: Number(message.idUser),
                 receiver: Number(message.receiver)
             }));
-
+    
             try {
-                const response =  await axios.put(`${Common.ipConfig}message/isCheckNewMessage`, {
-                    idUser: idUser,
-                    id: id,
-                });
-                console.log('PUT request success:', response.data);
+                if (maxId !== null) {
+                    const response =  await axios.put(`${Common.ipConfig}message/isCheckNewMessage`, {
+                        idUser: idUser,
+                        id: maxId,
+                    });
+                    console.log('PUT request success:', response.data);
+                }
+    
                 if (ws.readyState === WebSocket.OPEN) {
                     ws.send(JSON.stringify({
                         result: 'Success',
@@ -90,7 +98,7 @@ class TodoSocket {
         } else {
             ws.send(JSON.stringify({ error: 'Missing required fields: idUser, receiver' }));
         }
-    }
+    }    
 }
 
 module.exports = TodoSocket;
