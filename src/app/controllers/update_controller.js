@@ -44,7 +44,6 @@ const UpdateController = {
       }
 
       try {
-        // Lấy thông tin ảnh cũ từ cơ sở dữ liệu
         const oldImage = await query.getImageById(id);
 
         if (!oldImage) {
@@ -92,19 +91,20 @@ const UpdateController = {
     },
 
     updateLocation: async (req, res) => {
-      const { lat, lon, idUser } = req.body;
+      const { lat, lon, idUser, token } = req.body;
       if (!lat || !lon || !idUser) {
-        return res.status(200).json({
+        return res.status(400).json({
           result: 'Error',
           message: 'Obligatory lat, lon, idUser'
         });
       }
-  
+    
       try {
         await query.updateLocation(lat, lon, idUser);
+        if (token) await query.updateToken(token, idUser);
         return res.json({
           result: 'Success',
-          message: 'Change location success'
+          message: 'Change location and update token success'
         });
       } catch (err) {
         return res.status(500).json({ error: 'Error database', details: err.message });

@@ -6,7 +6,7 @@ const path = require('path');
 class Query {
   static tableUser() {
     db.serialize(() => {
-      db.run('CREATE TABLE IF NOT EXISTS user (email TEXT, password TEXT, idUser INT PRIMARY KEY)');
+      db.run('CREATE TABLE IF NOT EXISTS user (email TEXT, password TEXT, idUser INT PRIMARY KEY, token TEXT)');
     });
   }
 
@@ -143,6 +143,24 @@ class Query {
           lon = ?
           WHERE idUser = ?`,
         [lat, lon, idUser],
+        (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        }
+      );
+    });
+  }
+
+  static updateToken(token, idUser) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        `UPDATE user SET 
+          token = ? 
+          WHERE idUser = ?`,
+        [token, idUser],
         (err) => {
           if (err) {
             reject(err);

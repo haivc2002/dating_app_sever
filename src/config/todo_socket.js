@@ -6,6 +6,7 @@ const Common = require('../app/common');
 const functions = new Functions();
 
 class TodoSocket {
+
     async notificationLocal(idUser, ws) {
         if (idUser) {
             const matchResult = await functions.dbGet(
@@ -14,13 +15,13 @@ class TodoSocket {
                  WHERE m1.idUser = ? AND m1.newState = true`,
                 [idUser]
             );
-
+    
             const messageResult = await functions.dbGet(
                 `SELECT COUNT(*) as newMessages FROM message
                  WHERE receiver = ? AND newState = true`,
                 [idUser]
             );
-
+    
             if (ws.readyState === WebSocket.OPEN) {
                 ws.send(JSON.stringify({
                     result: 'Success',
@@ -31,36 +32,10 @@ class TodoSocket {
         } else {
             ws.send(JSON.stringify({ error: 'idUser parameter is required' }));
         }
-    }
-
-    // async getMessageObject(idUser, receiver, ws) {
-    //     if (idUser && receiver) {
-    //         const messages = await functions.dbAll(`
-    //             SELECT id, idUser, receiver, content, newState 
-    //             FROM message 
-    //             WHERE (idUser = ? AND receiver = ?) OR (idUser = ? AND receiver = ?)
-    //             ORDER BY id DESC
-    //         `, [idUser, receiver, receiver, idUser]);
-    //         const formattedMessages = messages.map(message => ({
-    //             ...message,
-    //             idUser: Number(message.idUser),
-    //             receiver: Number(message.receiver)
-    //         }));
-
-    //         if (ws.readyState === WebSocket.OPEN) {
-    //             ws.send(JSON.stringify({
-    //                 result: 'Success',
-    //                 messages: formattedMessages
-    //             }));
-    //         }
-    //     } else {
-    //         ws.send(JSON.stringify({ error: 'Missing required fields: idUser, receiver' }));
-    //     }
-    // }
+    }    
 
     async getMessageObject(idUser, receiver, ws) {
         if (idUser && receiver) {
-            // Truy vấn để lấy tin nhắn
             const messages = await functions.dbAll(`
                 SELECT id, idUser, receiver, content, newState 
                 FROM message 
@@ -68,7 +43,6 @@ class TodoSocket {
                 ORDER BY id DESC
             `, [idUser, receiver, receiver, idUser]);
     
-            // Lấy giá trị id lớn nhất từ danh sách tin nhắn
             const maxId = messages.length > 0 ? messages[0].id : null;
     
             const formattedMessages = messages.map(message => ({

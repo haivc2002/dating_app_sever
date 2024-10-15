@@ -21,6 +21,7 @@ router.post('/addImage', upload.single('image'), RegisterController.addImage);
 router.post('/registerInfoMore', RegisterController.registerInfoMore);
 
 router.post('/login', LoginController.login);
+router.post('/logout', LoginController.logout);
 router.get('/getInfo', LoginController.getInfo);
 
 module.exports = router;

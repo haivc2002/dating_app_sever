@@ -3,12 +3,15 @@ const Query = require('../init/query');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('mydatabase.db');
 const Functions = require('../functions/query_all_get');
+const axios = require('axios'); 
+const Common = require('../common');
 
 Query.tableMessage();
 
 const functions = new Functions();
 
 const MessageController = {
+    
     sendMessage: async (req, res) => {
         try {
             const { idUser, receiver, content } = req.body;
@@ -16,11 +19,10 @@ const MessageController = {
             if (!idUser || !receiver || !content) {
                 return res.status(400).json({ message: 'Missing required fields: idUser, receiver, content' });
             }
-    
             const updateOldMessages = `
                 UPDATE message 
                 SET newState = false 
-                WHERE (idUser = ? AND receiver = ?) OR (idUser = ? AND receiver = ?) 
+                WHERE ((idUser = ? AND receiver = ?) OR (idUser = ? AND receiver = ?)) 
                 AND newState = true
             `;
             await functions.dbRun(updateOldMessages, [idUser, receiver, receiver, idUser]);
@@ -34,12 +36,35 @@ const MessageController = {
             `;
             await functions.dbRun(insertMessage, [id, idUser, receiver, content, true]);
     
+            const senderNameQuery = 'SELECT name FROM info WHERE idUser = ?';
+            const senderNameResult = await functions.dbGet(senderNameQuery, [idUser]);
+    
+            if (!senderNameResult || !senderNameResult.name) {
+                return res.status(404).json({ message: 'Sender name not found' });
+            }
+    
+            const receiverTokenQuery = 'SELECT token FROM user WHERE idUser = ?';
+            const receiverTokenResult = await functions.dbGet(receiverTokenQuery, [receiver]);
+    
+            if (receiverTokenResult && receiverTokenResult.token) {
+                const title = senderNameResult.name;
+                const body = "Send you a message";
+    
+                const response = await axios.post(`${Common.ipConfig}notify/push`, { 
+                    title, 
+                    body, 
+                    token: receiverTokenResult.token 
+                });
+                console.log('Notification response:', response.data);
+            } else {
+                console.log(`Token not found for user: ${receiver}`);
+            }
             res.status(200).json({ result: 'Success', message: 'Message sent successfully' });
         } catch (err) {
             console.error(err);
             res.status(500).json({ message: 'Internal server error' });
         }
-    },
+    },    
 
     outsideViewMessage: async (req, res) => {
         try {

@@ -4,9 +4,10 @@ const db = new sqlite3.Database('mydatabase.db');
 const ResponseLogin = require('../models/auth/response_login'); 
 const RegisterFunction = require('../functions/register_function');
 const { userInfo } = require('os');
+const Functions = require('../functions/query_all_get');
 
 const functions = new RegisterFunction();
-
+const a = new Functions();
 
 const dbAll = (sql, params) => {
   return new Promise((resolve, reject) => {
@@ -127,6 +128,24 @@ const getInfo = async (req, res) => {
     res.status(500).json({ result: 'Error', message: 'Internal Server Error' });
   }
 
+};
+
+const logout = async (req, res) => {
+  const idUser = req.body.idUser;
+
+  if(idUser != null) {
+    const query = `UPDATE user SET token = NULL WHERE idUser = ?`;
+      await a.dbRun(query, [idUser]);
+      res.json({
+        result: "success",
+        message: "Logout successful!"
+      });
+  } else {
+    res.json({
+      "result": "error",
+      "message": "logout faile!"
+    });
+  }
 }
 
-module.exports = { login, getInfo };
+module.exports = { login, getInfo,  logout};
